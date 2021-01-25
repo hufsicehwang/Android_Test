@@ -3,10 +3,14 @@ package com.example.androidtest;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -14,6 +18,9 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class BlankFragment1 extends Fragment {
+    private ArrayList<Maindata> list;
+    private RecyclerView recyclerView;
+    private MainAdapter mainAdapter;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -58,7 +65,22 @@ public class BlankFragment1 extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_blank1, container, false);
+        // Fragment에서 recyclerview 쓰기!!!!
+        list = new ArrayList<>();
+        ViewGroup rootVoew = (ViewGroup)inflater.inflate(R.layout.fragment_blank1,container,false);
+        recyclerView = (RecyclerView) rootVoew.findViewById(R.id.rv);
+
+        mainAdapter = new MainAdapter(getActivity(),list);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setAdapter(mainAdapter);
+
+
+        for(int i = 0;i<10;i++){
+            Maindata mainData = new Maindata(R.mipmap.ic_launcher, "홍드로이드", "리사이클러뷰"+i);
+            list.add(mainData);
+        }
+
+
+        return rootVoew;
     }
 }
